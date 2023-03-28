@@ -680,7 +680,7 @@ export default class RunningScene extends Scene {
     this.player = await this.fbxLoader.loadAsync('../../assets/characters/xbot.fbx');
     this.player.position.z = -110;
     this.player.position.y = -35;
-    this.player.scale.set(  0.2,  0.2,   0.2);
+    this.player.scale.set(  0.1,  0.1,   0.1);
     this.player.rotation.y = 180 * (Math.PI / 180);
     this.add(this.player);
 
@@ -747,7 +747,7 @@ export default class RunningScene extends Scene {
     this.player.add(this.playerBox);
 
     // hide hitbox
-    this.playerBox.visible = false;
+    this.playerBox.visible = true;
 
     // load touch gestures
     const gestureZone = (document.getElementById('app') as HTMLInputElement);
