@@ -1,6 +1,7 @@
 import {
   Scene, DirectionalLight, AmbientLight, Object3D, AnimationMixer, AnimationAction, Clock, Box3
 } from 'three';
+import * as THREE from 'three'
 import TWEEN, { Tween } from '@tweenjs/tween.js';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
@@ -99,7 +100,7 @@ export default class RunningScene extends Scene {
 
       this.currentAnimation = this.jumpingAnimation;
       this.currentAnimation.reset();
-      this.currentAnimation.setLoop(1, 1);
+      this.currentAnimation.setLoop(THREE.LoopOnce,1);
       this.currentAnimation.clampWhenFinished = true;
       this.currentAnimation.play();
       this.animationMixer.addEventListener('finished', () => {
