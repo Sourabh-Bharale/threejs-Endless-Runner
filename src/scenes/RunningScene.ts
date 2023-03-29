@@ -109,7 +109,7 @@ export default class RunningScene extends Scene {
 
       this.currentAnimation = this.jumpingAnimation;
       this.currentAnimation.reset();
-      this.currentAnimation.setLoop(THREE.LoopOnce,1);
+      this.currentAnimation.setLoop(THREE.LoopOnce, 1);
       this.currentAnimation.clampWhenFinished = true;
       this.currentAnimation.play();
       this.animationMixer.addEventListener('finished', () => {
@@ -363,8 +363,8 @@ export default class RunningScene extends Scene {
   private playerBox = new Mesh(
     new BoxGeometry(),
     new MeshPhongMaterial({
-       color: 0x0000ff
-      })
+      color: 0x0000ff
+    })
   );
   private playerBoxCollider = new Box3(
     new Vector3(),
@@ -393,27 +393,27 @@ export default class RunningScene extends Scene {
   // spwan obstacles
   private spawnObstacle() {
     if (!this.currentObstacleOne.visible) {
-    this.currentObstacleOne.visible = true;
+      this.currentObstacleOne.visible = true;
     }
 
     if (!this.currentObstacleTwo.visible) {
-    this.currentObstacleTwo.visible = true;
-    this.currentObstacleTwo.position.z = this.currentObstacleOne.position.z - 450;
+      this.currentObstacleTwo.visible = true;
+      this.currentObstacleTwo.position.z = this.currentObstacleOne.position.z - 450;
     }
 
     this.currentObstacleOne.position.z += this.speed * this.delta;
     this.currentObstacleTwo.position.z += this.speed * this.delta;
 
     if (this.currentObstacleOne.position.z > -40) {
-    this.currentObstacleOne.visible = false;
-    this.currentObstacleOne.position.z = -1100;
-    this.currentObstacleOne = this.createRandomObstacle();
+      this.currentObstacleOne.visible = false;
+      this.currentObstacleOne.position.z = -1100;
+      this.currentObstacleOne = this.createRandomObstacle();
     }
 
     if (this.currentObstacleTwo.position.z > -40) {
-    this.currentObstacleTwo.visible = false;
-    this.currentObstacleTwo.position.z = this.currentObstacleOne.position.z - 450;
-    this.currentObstacleTwo = this.createRandomObstacle();
+      this.currentObstacleTwo.visible = false;
+      this.currentObstacleTwo.position.z = this.currentObstacleOne.position.z - 450;
+      this.currentObstacleTwo = this.createRandomObstacle();
     }
   }
 
@@ -438,7 +438,7 @@ export default class RunningScene extends Scene {
       rightCoin.scale.set(0.035, 0.035, 0.035);
       coinsGroup.add(leftCoin, centerCoin, rightCoin);
     }
-  coinsGroup.position.set(0, -20, -1200);
+    coinsGroup.position.set(0, -20, -1200);
     this.add(coinsGroup);
     coinsGroup.visible = false;
     this.coinsArray.push(coinsGroup);
@@ -570,7 +570,7 @@ export default class RunningScene extends Scene {
     this.currentAnimation = this.stumbleAnimation;
     this.currentObstacleOne.position.z -= 5;
     this.currentObstacleTwo.position.z -= 5;
-    this.isPlayerHeadStart= false;
+    this.isPlayerHeadStart = false;
     this.saveCoins();
     this.saveHighScore();
   }
@@ -596,7 +596,7 @@ export default class RunningScene extends Scene {
     (document.querySelector('.pause-button') as HTMLInputElement).style.display = 'block';
     this.player.position.x = 0;
     setTimeout(() => {
-      this.isPlayerHeadStart= true;
+      this.isPlayerHeadStart = true;
     }, 3000);
   }
 
@@ -625,7 +625,7 @@ export default class RunningScene extends Scene {
   // game pause/play
   private isGamePaused = false;
   private pauseAndResumeGame() {
-    if (!this.isGamePaused ) {
+    if (!this.isGamePaused) {
       this.clock.stop();
       (document.getElementById('game-paused-modal') as HTMLInputElement).style.display = 'block';
       this.isGamePaused = true;
@@ -680,7 +680,7 @@ export default class RunningScene extends Scene {
     this.player = await this.fbxLoader.loadAsync('../../assets/characters/xbot.fbx');
     this.player.position.z = -110;
     this.player.position.y = -35;
-    this.player.scale.set(  0.1,  0.1,   0.1);
+    this.player.scale.set(0.1, 0.1, 0.1);
     this.player.rotation.y = 180 * (Math.PI / 180);
     this.add(this.player);
 
@@ -753,16 +753,16 @@ export default class RunningScene extends Scene {
     const gestureZone = (document.getElementById('app') as HTMLInputElement);
 
     if (!this.isGameOver && !this.isGamePaused) {
-  gestureZone.addEventListener('touchstart', (event) => {
-    this.touchstartX = event.changedTouches[0].screenX;
-    this.touchstartY = event.changedTouches[0].screenY;
-  }, false);
+      gestureZone.addEventListener('touchstart', (event) => {
+        this.touchstartX = event.changedTouches[0].screenX;
+        this.touchstartY = event.changedTouches[0].screenY;
+      }, false);
 
-  gestureZone.addEventListener('touchend', (event) => {
-    this.touchendX = event.changedTouches[0].screenX;
-    this.touchendY = event.changedTouches[0].screenY;
-    this.handleTouch();
-  }, false);
+      gestureZone.addEventListener('touchend', (event) => {
+        this.touchendX = event.changedTouches[0].screenX;
+        this.touchendY = event.changedTouches[0].screenY;
+        this.handleTouch();
+      }, false);
     }
 
   }
@@ -855,12 +855,27 @@ export default class RunningScene extends Scene {
     (document.querySelector('.scores-count') as HTMLInputElement).innerHTML = this.scores.toString();
 
     // update speed
-    if (!this.isGameOver && this.speed < 400 && !this.isGamePaused ) {
+    if (!this.isGameOver && this.speed < 400 && !this.isGamePaused) {
       this.speed += 0.06;
     }
   }
 
   hide() {
+    (document.querySelector('.disable-touch') as HTMLInputElement).style.display = 'none';
 
+    this.isGameOver = false;
+    this.coins = 0;
+    this.scores = 0;
+
+    (document.getElementById('game-paused-modal') as HTMLInputElement).style.display = 'none';
+    (document.querySelector('.scores-container') as HTMLInputElement).style.display = 'none';
+    (document.querySelector('.coins-container') as HTMLInputElement).style.display = 'none';
+    (document.querySelector('.pause-button') as HTMLInputElement).style.display = 'none';
+
+    this.visible = false;
+    this.currentObstacleOne.position.z = -1200; this.currentObstacleTwo.position.z = -1500;
+    this.activeCoinsGroup.position.z = -1200; this.currentAnimation.stop();
+
+    this.clock.stop();
   }
 }

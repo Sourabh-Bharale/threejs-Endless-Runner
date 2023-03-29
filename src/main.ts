@@ -1,6 +1,9 @@
 import { WebGLRenderer, PerspectiveCamera } from 'three';
 
 import RunningScene from './scenes/RunningScene';
+import MainMenuScene from './scenes/MainMenuScene';
+
+let currentScene: MainMenuScene | RunningScene;
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -24,18 +27,50 @@ function onWindowResize() {
 
 window.addEventListener('resize', onWindowResize);
 
+
+// select scene
+
 const runningScene = new RunningScene();
+const mainMenuScene = new MainMenuScene();
+
+const switchToRunningScene = () => {
+  currentScene.hide();
+  currentScene = runningScene;
+  currentScene.initialize();
+};
+
+const switchToMainMenuScene = () => {
+  currentScene.hide();
+  currentScene = mainMenuScene;
+  currentScene.initialize();
+};
+
+(document.getElementById('play-game-button')as HTMLInputElement).onclick = () => {
+  switchToRunningScene();
+};
+(document.querySelector('#quit-button')as HTMLInputElement).onclick = () => {
+  (document.getElementById('game-over-modal')as HTMLInputElement).style.display = 'none';
+  switchToMainMenuScene();
+};
+
+(document.querySelector('#game-over-quit-button')as HTMLInputElement).onclick = () => {
+  (document.getElementById('game-over-modal')as HTMLInputElement).style.display = 'none';
+  switchToMainMenuScene();
+};
+
+currentScene = mainMenuScene;
 
 const render = () => {
-  runningScene.update();
-  renderer.render(runningScene, mainCamera);
+  currentScene.update();
+  renderer.render(currentScene, mainCamera);
   requestAnimationFrame(render);
 };
 
 const main = async () => {
   await runningScene.load();
+  await mainMenuScene.load();
   (document.querySelector('.loading-container') as HTMLInputElement).style.display = 'none';
-  runningScene.initialize();
+  currentScene.initialize();
   render();
 };
 
